@@ -1,0 +1,81 @@
+version: '3'
+services:
+      proxy:
+            image: nginx:alpine # utilise la version la plus récente 
+            ports:
+                  - '80:80' # expose 80 sur l’hôte et envoie à 80 dans conteneur 
+            networks:
+                  - frontend
+            volumes:
+                  - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+
+      
+      php1:
+            build: './serveur1/php/'
+            networks:
+                  - backend1
+            restart: on-failure
+            volumes:
+                  #- ./serveur1/monsite/html:/usr/share/nginx/html
+                  - ./serveur1/monsite/html:/srv/htdocs/
+      php2:
+            build: './serveur2/php/'
+            networks:
+                  - backend2
+            restart: on-failure
+            volumes:
+                  #- ./serveur2/monsite/html:/usr/share/nginx/html
+                  - ./serveur2/monsite/html:/srv/htdocs/
+
+
+#sudo chown -R $USER <path-to-folder>
+      serveur1:
+            #image: httpd:alpine # utilise la version httpd:lapine 
+            build: './serveur1/monsite/'
+            # depends_on:
+            #       - php1
+            #       - mariadb1
+            networks:
+                  - frontend
+                  - backend1
+            volumes:
+                  #- ./serveur1/monsite/html:/usr/local/apache2/htdocs/
+                  - ./serveur1/monsite/html:/srv/htdocs/
+      serveur2:
+            #image: httpd:alpine # utilise la version httpd:alpine 
+            build: './serveur2/monsite/'
+            # depends_on:
+            #       - php2
+            #       - mariadb2
+            networks:
+                  - frontend
+                  - backend2
+            volumes:
+                  #- ./serveur2/monsite/html:/usr/local/apache2/htdocs/
+                  - ./serveur2/monsite/html:/srv/htdocs/
+
+
+      mariadb1:
+            image: mariadb:latest
+            networks:
+                  - backend1
+            environment:
+                  - MYSQL_ROOT_PASSWORD=rootpassword
+            restart: on-failure
+            volumes:
+                  - ./serveur1/mariadb/dbdata:/var/lib/mysql         
+      mariadb2:
+            image: mariadb:latest
+            networks:
+                  - backend2
+            environment:
+                  - MYSQL_ROOT_PASSWORD=rootpassword
+            restart: on-failure
+            volumes:
+                  - ./serveur2/mariadb/dbdata:/var/lib/mysql  
+
+
+networks:
+      frontend:
+      backend1:
+      backend2:
