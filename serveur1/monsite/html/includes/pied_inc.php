@@ -7,7 +7,7 @@
             <p class="col-12 col-sm-4 border border-dark align-self-center"><a href="#page">Haut de la page</a></p>
             <p class="col-12 col-sm-4 border border-dark align-self-center">Copyright 2022</p>
             <p class="col-12 col-sm-4 border border-dark align-self-center">420-W24-SF</p>
-            <p class="col-12 col-sm-4 border border-dark align-self-center">Travail Pratique 2</p>
+            <p class="col-12 col-sm-4 border border-dark align-self-center">Serveur 1 - TP2</p>
             <p class="col-12 col-sm-8 border border-dark align-self-center">Dominique Lebrun, Tien Binh Nguyen et Michel Couture</p>
         </div>
     </div>
