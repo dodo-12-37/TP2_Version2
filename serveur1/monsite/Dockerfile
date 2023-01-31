@@ -8,7 +8,7 @@ RUN apk update; \
     apk upgrade;
 # Met a jour le serveur
 
-RUN mkdir /srv/htdocs
+#RUN mkdir /srv/htdocs
 # Ajouter le repertoire pour les documents HTML
 
 EXPOSE 80 443

@@ -16,16 +16,18 @@ services:
                   - backend1
             restart: on-failure
             volumes:
+                  - ./serveur1/monsite/html:/usr/local/apache2/htdocs/
                   #- ./serveur1/monsite/html:/usr/share/nginx/html
-                  - ./serveur1/monsite/html:/srv/htdocs/
+                  #- ./serveur1/monsite/html:/srv/htdocs/
       php2:
             build: './serveur2/php/'
             networks:
                   - backend2
             restart: on-failure
             volumes:
+                  - ./serveur2/monsite/html:/usr/local/apache2/htdocs/
                   #- ./serveur2/monsite/html:/usr/share/nginx/html
-                  - ./serveur2/monsite/html:/srv/htdocs/
+                  #- ./serveur2/monsite/html:/srv/htdocs/
 
 
 #sudo chown -R $USER <path-to-folder>
@@ -38,9 +40,15 @@ services:
             networks:
                   - frontend
                   - backend1
+            # command: cp ./serveur1/monsite/conf/httpd.conf serveur1:/usr/local/apache2/conf/httpd.conf
+
+            # configs:
+            #       #- httpd_config
+            #       file: /serveur1/monsite/conf/httpd.conf
             volumes:
-                  #- ./serveur1/monsite/html:/usr/local/apache2/htdocs/
-                  - ./serveur1/monsite/html:/srv/htdocs/
+                  - ./serveur1/monsite/html/:/usr/local/apache2/htdocs/
+                  #- ./serveur1/monsite/conf/:/usr/local/apache2/conf/
+                  #- ./serveur1/monsite/html:/srv/htdocs/
       serveur2:
             #image: httpd:alpine # utilise la version httpd:alpine 
             build: './serveur2/monsite/'
@@ -50,9 +58,14 @@ services:
             networks:
                   - frontend
                   - backend2
+            # command: cp ./serveur2/monsite/conf/httpd.conf serveur2:/usr/local/apache2/conf/httpd.conf
+            # configs:
+            #       #- httpd_config
+            #       file: /serveur2/monsite/conf/httpd.conf
             volumes:
-                  #- ./serveur2/monsite/html:/usr/local/apache2/htdocs/
-                  - ./serveur2/monsite/html:/srv/htdocs/
+                  - ./serveur2/monsite/html/:/usr/local/apache2/htdocs/
+                  # ./serveur2/monsite/conf/:/usr/local/apache2/conf/
+                  #- ./serveur2/monsite/html:/srv/htdocs/
 
 
       mariadb1:
@@ -74,6 +87,10 @@ services:
             volumes:
                   - ./serveur2/mariadb/dbdata:/var/lib/mysql  
 
+# configs:
+#       httpd-config:
+#             #external: true
+#             file: /serveur1/monsite/conf/httpd.conf
 
 networks:
       frontend:

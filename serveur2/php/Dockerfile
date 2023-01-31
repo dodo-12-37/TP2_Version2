@@ -9,4 +9,4 @@ RUN apk update; \
 RUN docker-php-ext-install mysqli
 # Install mysqli
 
-WORKDIR /srv/htdocs/
+#WORKDIR /srv/htdocs/
