@@ -8,7 +8,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/includes/entete_inc.php");
 <!-- Binh, Michel, Dom -->
 <main class="col col-sm-9 col-lg-10 pt-2 pb-4">
     <h2 class="text-center my-4">Accueil</h2>
-
+    
     <p class="text_accueil">Magasin de musique en ligne - MML</p>
     <p class="text_accueil">Notre magasin vous offre le meilleur de la musique classique, folk, rock,
         rap, jazz, blues, country et techno. Vous pouvez achetez les oeuvres des plus grands artistes
@@ -19,6 +19,22 @@ require_once($_SERVER['DOCUMENT_ROOT']."/includes/entete_inc.php");
         Notre site vous offrira de nouvelle options dans un futur proche et la quantité d'oeuvres disponibles ne cessera
         de s'accroître. Nous vous promettons plein d'agréables surprises!</p>
 
+    <!-- Ajout cours ISS -->
+    <h3 class="text-center my-4">Tentative de connexion MariaDB depuis PHP...</h3>
+
+    <?php  
+    $host = 'mariadb1'; 
+    $user = 'root'; 
+    $pass = 'rootpassword'; 
+    $conn = new mysqli($host, $user, $pass); 
+
+    if ($conn->connect_error) { 
+        die("La connexion a échoué: " . $conn->connect_error); 
+    }  
+
+    echo "Connexion réussie à MariaDB!"; 
+    //phpinfo();
+    ?>
 </main>
 
 <?php

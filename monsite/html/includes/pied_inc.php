@@ -7,7 +7,7 @@
             <p class="col-12 col-sm-4 border border-dark align-self-center"><a href="#page">Haut de la page</a></p>
             <p class="col-12 col-sm-4 border border-dark align-self-center">Copyright 2022</p>
             <p class="col-12 col-sm-4 border border-dark align-self-center">420-W24-SF</p>
-            <p class="col-12 col-sm-4 border border-dark align-self-center text-warning bg-danger">Serveur 1 - TP2</p>
+            <p class="col-12 col-sm-4 border border-dark align-self-center text-warning bg-danger"><?php echo getenv('MON_SERVEUR');?></p>
             <p class="col-12 col-sm-8 border border-dark align-self-center">Dominique Lebrun, Tien Binh Nguyen et Michel Couture</p>
         </div>
     </div>

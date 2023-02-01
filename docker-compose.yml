@@ -11,61 +11,48 @@ services:
 
       
       php1:
-            build: './serveur1/php/'
+            build: './php/'
             networks:
                   - backend1
             restart: on-failure
+            environment:
+                  MON_SERVEUR:      Serveur1 - TP2
             volumes:
-                  - ./serveur1/monsite/html:/usr/local/apache2/htdocs/
-                  #- ./serveur1/monsite/html:/usr/share/nginx/html
-                  #- ./serveur1/monsite/html:/srv/htdocs/
+                  - ./monsite/html:/usr/local/apache2/htdocs/
       php2:
-            build: './serveur2/php/'
+            build: './php/'
             networks:
                   - backend2
             restart: on-failure
+            environment:
+                  MON_SERVEUR:      Serveur2 - TP2
             volumes:
-                  - ./serveur2/monsite/html:/usr/local/apache2/htdocs/
-                  #- ./serveur2/monsite/html:/usr/share/nginx/html
-                  #- ./serveur2/monsite/html:/srv/htdocs/
+                  - ./monsite/html:/usr/local/apache2/htdocs/
 
 
 #sudo chown -R $USER <path-to-folder>
       serveur1:
-            #image: httpd:alpine # utilise la version httpd:lapine 
-            build: './serveur1/monsite/'
+            image: httpd:alpine # utilise la version httpd:lapine 
             # depends_on:
             #       - php1
             #       - mariadb1
             networks:
                   - frontend
                   - backend1
-            # command: cp ./serveur1/monsite/conf/httpd.conf serveur1:/usr/local/apache2/conf/httpd.conf
-
-            # configs:
-            #       #- httpd_config
-            #       file: /serveur1/monsite/conf/httpd.conf
             volumes:
-                  - ./serveur1/monsite/html/:/usr/local/apache2/htdocs/
-                  #- ./serveur1/monsite/conf/:/usr/local/apache2/conf/
-                  #- ./serveur1/monsite/html:/srv/htdocs/
+                  - ./monsite/html:/usr/local/apache2/htdocs
+                  - ./serveur1/conf/httpd.conf:/usr/local/apache2/conf/httpd.conf
       serveur2:
-            #image: httpd:alpine # utilise la version httpd:alpine 
-            build: './serveur2/monsite/'
+            image: httpd:alpine # utilise la version httpd:alpine 
             # depends_on:
             #       - php2
             #       - mariadb2
             networks:
                   - frontend
                   - backend2
-            # command: cp ./serveur2/monsite/conf/httpd.conf serveur2:/usr/local/apache2/conf/httpd.conf
-            # configs:
-            #       #- httpd_config
-            #       file: /serveur2/monsite/conf/httpd.conf
             volumes:
-                  - ./serveur2/monsite/html/:/usr/local/apache2/htdocs/
-                  # ./serveur2/monsite/conf/:/usr/local/apache2/conf/
-                  #- ./serveur2/monsite/html:/srv/htdocs/
+                  - ./monsite/html:/usr/local/apache2/htdocs
+                  - ./serveur2/conf/httpd.conf:/usr/local/apache2/conf/httpd.conf
 
 
       mariadb1:
@@ -87,10 +74,6 @@ services:
             volumes:
                   - ./serveur2/mariadb/dbdata:/var/lib/mysql  
 
-# configs:
-#       httpd-config:
-#             #external: true
-#             file: /serveur1/monsite/conf/httpd.conf
 
 networks:
       frontend:

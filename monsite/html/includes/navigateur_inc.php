@@ -16,6 +16,10 @@
             echo '<a class="btn btn-success btn-block nav-item" href="pageConnexion.php">Connexion</a></div>';
         }
 
+        echo "<p class='nav-item bg-danger text-warning'>";
+        echo getenv('MON_SERVEUR');
+        echo "</p>";
+
         if (isset($_SESSION['login'])) {
             $nomUserConnecter = unserialize($_SESSION['login'])->getNom();
             echo "<p class='nav-item text-info'>Bonjour $nomUserConnecter !!!</p>";
