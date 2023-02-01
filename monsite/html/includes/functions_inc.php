@@ -24,7 +24,7 @@ $titleName = str_replace('page', '', $titleName);
 // echo "$titleName<br>";
 
 
-// function seConnecterPDO()
+// function seConnecterMySQLi()
 // {
 //     try {
 //         //echo "<h1>Bases de données MySQL (PDO)</h1>";

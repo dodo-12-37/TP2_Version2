@@ -53,7 +53,7 @@ if (isset($_SESSION)) {
     <form action="<?= $_SERVER['PHP_SELF'] ?>" method="post" style="max-width: 800px;" class="mx-auto my-4">
         <div class="form-row">
             <div class="form-group col-6">
-                <label for="courriel">Courriel</label>
+                <label for="courriel">Courriel (awdeali@gmail.com ou qwerty@hotmail.com)</label>
                 <input type="email" class="form-control" name="courriel" id="courriel" required>
                 <span id="errCourriel" class="text-danger err_texts">
                     <?php if (isset($erreurCourriel)) {
@@ -63,7 +63,7 @@ if (isset($_SESSION)) {
                 <!-- required -->
             </div>
             <div class="form-group col-6">
-                <label for="mot_de_passe">Mot de passe</label>
+                <label for="mot_de_passe">Mot de passe (!Qwerty123)</label>
                 <input type="password" class="form-control" name="mot_de_passe" id="mot_de_passe" required>
                 <span id="err_MDP" class="text-danger err_texts">
                     <?php if (isset($erreurPassword)) {
@@ -72,6 +72,7 @@ if (isset($_SESSION)) {
                 </span>
                 <!-- required -->
             </div>
+            <p class="bg-danger text-warning">À cause du changement de serveur à chaque request, il n'est pas très agréable de se connecter sur le site... Il faudrait synchroniser les 2 serveurs php ???</p>
             <div class="form-row my-3">
                 <div class="col-6  col-md-8">
                     <button id="conn_submit" class="btn btn-success btn-block btn" type="submit" name='connexion' value="submit">Se connecter</button>
