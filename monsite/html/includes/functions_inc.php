@@ -28,12 +28,12 @@ function seConnecterPDO()
 {
     try {
         //echo "<h1>Bases de données MySQL (PDO)</h1>";
-        $servername = 'localhost';
+        $servername = getenv('MON_HOST');
         $username = 'root';
-        $password = '';
+        $password = 'rootpassword';
         $bd = 'tp2_media_web';
-
-        $conn = new PDO("mysql:host=$servername; dbname=$bd; charset=utf8", $username, $password);
+        $conn = new mysqli($servername, $username, $password, $bd); 
+        //$conn = new PDO("mysql:host=$servername; dbname=$bd; charset=utf8", $username, $password);
         //echo "Sa fonctionne !!!";
     } catch (Exception $e) {
         die('Erreur lors de la connexion à la BD : ' . $e->getMessage());
@@ -41,6 +41,24 @@ function seConnecterPDO()
 
     return $conn;
 }
+
+// function seConnecterPDO()
+// {
+//     try {
+//         //echo "<h1>Bases de données MySQL (PDO)</h1>";
+//         $servername = getenv('MON_HOST');
+//         $username = 'root';
+//         $password = 'rootpassword';
+//         $bd = 'tp2_media_web';
+//         
+//         $conn = new PDO("mysql:host=$servername; dbname=$bd; charset=utf8", $username, $password);
+//         //echo "Sa fonctionne !!!";
+//     } catch (Exception $e) {
+//         die('Erreur lors de la connexion à la BD : ' . $e->getMessage());
+//     }
+
+//     return $conn;
+// }
 
 
 //Page Menu

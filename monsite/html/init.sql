@@ -4,8 +4,8 @@
 --
 -- Base de données : tp2_media_web
 --
-DROP DATABASE IF EXISTS tp2_media_web;
-CREATE DATABASE tp2_media_web;
+-- DROP DATABASE IF EXISTS tp2_media_web;
+CREATE DATABASE if not exists tp2_media_web;
 USE tp2_media_web;
 -- --------------------------------------------------------
 
@@ -14,7 +14,7 @@ USE tp2_media_web;
 -- Structure de la table genre
 --
 
-DROP TABLE IF EXISTS genre;
+--DROP TABLE IF EXISTS genre;
 CREATE TABLE IF NOT EXISTS genre (
   id_genre int NOT NULL AUTO_INCREMENT,
   description varchar(45) NOT NULL,
@@ -49,7 +49,7 @@ INSERT INTO `genre` (`id_genre`, `description`) VALUES
 -- Structure de la table roles
 --
 
-DROP TABLE IF EXISTS roles;
+--DROP TABLE IF EXISTS roles;
 CREATE TABLE IF NOT EXISTS roles (
   id_role tinyint UNSIGNED NOT NULL AUTO_INCREMENT,
   description varchar(30) NOT NULL,
@@ -74,7 +74,7 @@ INSERT INTO roles (id_role, description) VALUES
 -- Structure de la table continent
 --
 
-DROP TABLE IF EXISTS continent;
+--DROP TABLE IF EXISTS continent;
 CREATE TABLE IF NOT EXISTS continent (
   id_continent tinyint UNSIGNED NOT NULL,
   nom_continent varchar(45) NOT NULL,
@@ -99,7 +99,7 @@ INSERT INTO continent (id_continent, nom_continent) VALUES
 -- Structure de la table pays
 --
 
-DROP TABLE IF EXISTS pays;
+--DROP TABLE IF EXISTS pays;
 CREATE TABLE IF NOT EXISTS pays (
   id_pays int NOT NULL AUTO_INCREMENT,
   nom_pays varchar(30) NOT NULL,
@@ -135,7 +135,7 @@ INSERT INTO pays (id_pays, nom_pays, code_monnaie, taux, id_continent) VALUES
 --
 -- Table structure for table `ville`
 --
-DROP TABLE IF Exists ville;
+--DROP TABLE IF Exists ville;
 CREATE TABLE IF NOT EXISTS `ville` (
   `id_ville` int NOT NULL AUTO_INCREMENT,
   `nom_ville` varchar(30) NOT NULL UNIQUE,
@@ -144,6 +144,7 @@ CREATE TABLE IF NOT EXISTS `ville` (
   KEY fk_ville_pays (id_pays),
   CONSTRAINT fk_ville_pays FOREIGN KEY (id_pays) REFERENCES pays (id_pays) 
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
+
 INSERT INTO `ville` VALUES
 (1,  'Montréal',1),
 (2,  'Trois-Rivière',1),
@@ -199,9 +200,9 @@ INSERT INTO `ville` VALUES
 -- SELECT * FROM ville;
 
 --
--- Table structure for table `album`
+-- Table structure for table `album` ------ ERREURS QQPART ICI !!!!!!!!
 --
-DROP TABLE IF EXISTS album;
+--DROP TABLE IF EXISTS album;
 CREATE TABLE IF NOT EXISTS `album` (
   `id_album` int(11) NOT NULL AUTO_INCREMENT,
   `titre` varchar(50) NOT NULL,
@@ -210,7 +211,8 @@ CREATE TABLE IF NOT EXISTS `album` (
   `id_genre` int(11) NOT NULL,
   `pht_couvt` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id_album`),
-  constraint chk_code_album check(regexp_like(code_album, '^[A-Z]{3}[0-9]{4}$')),
+  --constraint chk_code_album check(regexp_like(code_album, '^[A-Z]{3}[0-9]{4}$')),
+  constraint chk_code_album check(code_album regexp '^[A-Z]{3}[0-9]{4}$'),
   KEY fk_genre_alb (id_genre),
   CONSTRAINT fk_genre_alb FOREIGN KEY (id_genre) REFERENCES genre (id_genre)  
 ) ENGINE=InnoDB;
@@ -244,7 +246,7 @@ INSERT INTO album (id_album, titre, code_album, date_album, id_genre, pht_couvt)
 -- Structure de la table artiste
 --
 
-DROP TABLE IF EXISTS artiste;
+--DROP TABLE IF EXISTS artiste;
 CREATE TABLE IF NOT EXISTS `artiste` (
   `id_artiste` int unsigned NOT NULL AUTO_INCREMENT,
   `nom_artiste` varchar(45) NOT NULL unique,
@@ -281,7 +283,7 @@ INSERT INTO artiste (id_artiste, nom_artiste, pht_artiste, id_ville) VALUES
 -- Structure de la table oeuvre
 --
 
-DROP TABLE IF EXISTS oeuvre;
+--DROP TABLE IF EXISTS oeuvre;
 CREATE TABLE IF NOT EXISTS oeuvre (
   id_oeuvre int NOT NULL AUTO_INCREMENT,
   titre_oeuvre varchar(100) NOT NULL,
@@ -480,7 +482,7 @@ INSERT INTO oeuvre (id_oeuvre, titre_oeuvre, id_artiste, dureesec, taillemb, lyr
 -- Structure de la table utilisateur
 --
 
-DROP TABLE IF EXISTS utilisateur;
+--DROP TABLE IF EXISTS utilisateur;
 CREATE TABLE utilisateur (
   id_utilisateur int NOT NULL AUTO_INCREMENT PRIMARY KEY,
   nom varchar(45) NOT NULL,
@@ -543,13 +545,14 @@ INSERT INTO utilisateur (id_utilisateur, nom, courriel, mot_passe, id_ville, age
 (77, 'Bob', 'bob@hotmail.com', '$2y$10$3TnfMB4qvXQiSafeCSzakeNfbhqu3mff8y1WHbUw17FgAYvEuI1WS', 3, 24),
 (78, 'Bily', 'bily@gmail.com', '$2y$10$5Y/OCXWajOXCIkj7WDgy7u4Fznu3BqaL4BlWn4FZzBiR1AEIVSFba', 32, 41),
 (79, 'Qwerty', 'qwerty@hotmail.com', '$2y$10$XLzosaxUSVnBcBlWxmLdJuu8pFuL3VzQGkRFVWXXlJrJdmaMgBie6', 1, 37);
+
 -- SELECT * FROM utilisateur;
 
 --
 -- Structure de la table commande
 --
 
-DROP TABLE IF EXISTS commande;
+--DROP TABLE IF EXISTS commande;
 CREATE TABLE IF NOT EXISTS commande (
 	id_commande int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	id_utilisateur int NOT NULL , 
@@ -608,6 +611,7 @@ INSERT INTO commande (id_commande, id_utilisateur, date_commande, etat_commande)
 (43, 74, '2022-02-17 00:00:00', 'En cours'),
 (44, 31, '2022-02-20 00:00:00', 'En cours'),
 (45, 55, '2022-02-20 00:00:00', 'En cours');
+
 INSERT INTO commande (`id_utilisateur`) 
 VALUES ( '1'),
 ( '22'),
@@ -625,7 +629,7 @@ VALUES ( '1'),
 -- Structure de la table ligne_commande
 --
 
-DROP TABLE IF EXISTS ligne_commande;
+--DROP TABLE IF EXISTS ligne_commande;
 CREATE TABLE IF NOT EXISTS ligne_commande (
   id_commande int NOT NULL,
   id_oeuvre int NOT NULL,
@@ -785,5 +789,5 @@ INSERT INTO ligne_commande (id_commande, id_oeuvre, Quantite) VALUES
 -- --------------------------------------------------------
 -- --------------------------------------------------------
 
-COMMIT;
+-- COMMIT;
 

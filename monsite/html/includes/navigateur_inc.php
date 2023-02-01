@@ -16,6 +16,7 @@
             echo '<a class="btn btn-success btn-block nav-item" href="pageConnexion.php">Connexion</a></div>';
         }
 
+        //<!-- Ajout cours ISS -->
         echo "<p class='nav-item bg-danger text-warning'>";
         echo getenv('MON_SERVEUR');
         echo "</p>";

@@ -17,6 +17,7 @@ services:
             restart: on-failure
             environment:
                   MON_SERVEUR:      Serveur1 - TP2
+                  MON_HOST:   mariadb1
             volumes:
                   - ./monsite/html:/usr/local/apache2/htdocs/
       php2:
@@ -26,6 +27,7 @@ services:
             restart: on-failure
             environment:
                   MON_SERVEUR:      Serveur2 - TP2
+                  MON_HOST:   mariadb2
             volumes:
                   - ./monsite/html:/usr/local/apache2/htdocs/
 
@@ -60,19 +62,29 @@ services:
             networks:
                   - backend1
             environment:
+                  #- MYSQL_ROOT_USER=root
                   - MYSQL_ROOT_PASSWORD=rootpassword
+                  #- MYSQL_DATABASE=tp2_media_web
+                  #- MYSQL_USER=admin
+                  #- MYSQL_PASSWORD=rootpassword
             restart: on-failure
             volumes:
-                  - ./serveur1/mariadb/dbdata:/var/lib/mysql         
+                  - ./serveur1/mariadb/dbdata:/var/lib/mysql
+                  - ./monsite/html/init.sql:/docker-entrypoint-initdb.d/init.sql
       mariadb2:
             image: mariadb:latest
             networks:
                   - backend2
             environment:
+                  #- MYSQL_ROOT_USER=root
                   - MYSQL_ROOT_PASSWORD=rootpassword
+                  #- MYSQL_DATABASE=tp2_media_web
+                  #- MYSQL_USER=admin
+                  #- MYSQL_PASSWORD=rootpassword
             restart: on-failure
             volumes:
-                  - ./serveur2/mariadb/dbdata:/var/lib/mysql  
+                  - ./serveur2/mariadb/dbdata:/var/lib/mysql
+                  - ./monsite/html/init.sql:/docker-entrypoint-initdb.d/init.sql
 
 
 networks:

@@ -23,7 +23,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/includes/entete_inc.php");
     <h3 class="text-center my-4">Tentative de connexion MariaDB depuis PHP...</h3>
 
     <?php  
-    $host = 'mariadb1'; 
+    $host = getenv('MON_HOST'); 
     $user = 'root'; 
     $pass = 'rootpassword'; 
     $conn = new mysqli($host, $user, $pass); 
