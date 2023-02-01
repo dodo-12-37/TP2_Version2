@@ -20,6 +20,7 @@ services:
                   MON_HOST:   mariadb1
             volumes:
                   - ./monsite/html:/usr/local/apache2/htdocs/
+                  #- ./monsite/html:/var/www/html
       php2:
             build: './php/'
             networks:
@@ -30,6 +31,7 @@ services:
                   MON_HOST:   mariadb2
             volumes:
                   - ./monsite/html:/usr/local/apache2/htdocs/
+                  #- ./monsite/html:/var/www/html
 
 
 #sudo chown -R $USER <path-to-folder>
@@ -70,7 +72,7 @@ services:
             restart: on-failure
             volumes:
                   - ./serveur1/mariadb/dbdata:/var/lib/mysql
-                  - ./monsite/html/init.sql:/docker-entrypoint-initdb.d/init.sql
+                  - ./monsite/SQL/init.sql:/docker-entrypoint-initdb.d/init.sql
       mariadb2:
             image: mariadb:latest
             networks:
@@ -84,7 +86,7 @@ services:
             restart: on-failure
             volumes:
                   - ./serveur2/mariadb/dbdata:/var/lib/mysql
-                  - ./monsite/html/init.sql:/docker-entrypoint-initdb.d/init.sql
+                  - ./monsite/SQL/init.sql:/docker-entrypoint-initdb.d/init.sql
 
 
 networks:

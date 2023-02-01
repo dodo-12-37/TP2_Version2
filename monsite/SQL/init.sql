@@ -11,7 +11,7 @@ USE tp2_media_web;
 
 
 --
--- Structure de la table genre
+-- Structure de la table genre                           OK
 --
 
 --DROP TABLE IF EXISTS genre;
@@ -46,7 +46,7 @@ INSERT INTO `genre` (`id_genre`, `description`) VALUES
 
 
 --
--- Structure de la table roles
+-- Structure de la table roles                           OK
 --
 
 --DROP TABLE IF EXISTS roles;
@@ -71,7 +71,7 @@ INSERT INTO roles (id_role, description) VALUES
 
 
 --
--- Structure de la table continent
+-- Structure de la table continent                           OK
 --
 
 --DROP TABLE IF EXISTS continent;
@@ -96,7 +96,7 @@ INSERT INTO continent (id_continent, nom_continent) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table pays
+-- Structure de la table pays                           OK
 --
 
 --DROP TABLE IF EXISTS pays;
@@ -133,7 +133,7 @@ INSERT INTO pays (id_pays, nom_pays, code_monnaie, taux, id_continent) VALUES
 -- SELECT * FROM pays;
 -- --------------------------------------------------------
 --
--- Table structure for table `ville`
+-- Table structure for table `ville`                           OK
 --
 --DROP TABLE IF Exists ville;
 CREATE TABLE IF NOT EXISTS `ville` (
@@ -200,7 +200,7 @@ INSERT INTO `ville` VALUES
 -- SELECT * FROM ville;
 
 --
--- Table structure for table `album` ------ ERREURS QQPART ICI !!!!!!!!
+-- Table structure for table `album` ------                           OK
 --
 --DROP TABLE IF EXISTS album;
 CREATE TABLE IF NOT EXISTS `album` (
@@ -211,11 +211,11 @@ CREATE TABLE IF NOT EXISTS `album` (
   `id_genre` int(11) NOT NULL,
   `pht_couvt` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id_album`),
-  --constraint chk_code_album check(regexp_like(code_album, '^[A-Z]{3}[0-9]{4}$')),
   constraint chk_code_album check(code_album regexp '^[A-Z]{3}[0-9]{4}$'),
   KEY fk_genre_alb (id_genre),
   CONSTRAINT fk_genre_alb FOREIGN KEY (id_genre) REFERENCES genre (id_genre)  
 ) ENGINE=InnoDB;
+  -- constraint chk_code_album check(regexp_like(code_album, '^[A-Z]{3}[0-9]{4}$')),
 
 --
 -- Déchargement des données de la table album
@@ -243,7 +243,7 @@ INSERT INTO album (id_album, titre, code_album, date_album, id_genre, pht_couvt)
 -- --------------------------------------------------------
 
 --
--- Structure de la table artiste
+-- Structure de la table artiste                           OK
 --
 
 --DROP TABLE IF EXISTS artiste;
@@ -296,15 +296,16 @@ CREATE TABLE IF NOT EXISTS oeuvre (
   id_album int NOT NULL,
   prix int DEFAULT '1',
   PRIMARY KEY (`id_oeuvre`),
-  UNIQUE KEY `id_oeuvre` (`id_oeuvre`),
-  KEY fk_oeuvre_alb (id_album),
-  CONSTRAINT fk_oeuvre_alb FOREIGN KEY (id_album) REFERENCES Album (id_album),
-  KEY fk_oeuvre_art (id_artiste),
+  CONSTRAINT fk_oeuvre_alb FOREIGN KEY (id_album) REFERENCES album (id_album),
   CONSTRAINT fk_oeuvre_art FOREIGN KEY (id_artiste) REFERENCES artiste (id_artiste),
-  KEY fk_oeuvre_role (id_role),
-  CONSTRAINT fk_oeuvre_role FOREIGN KEY (id_role) REFERENCES roles(id_role)  
+  CONSTRAINT fk_oeuvre_role FOREIGN KEY (id_role) REFERENCES roles (id_role)  
 ) ENGINE=InnoDB;
 
+
+  --UNIQUE KEY `id_oeuvre` (`id_oeuvre`),
+  --KEY fk_oeuvre_alb (id_album),
+  --KEY fk_oeuvre_art (id_artiste),
+  --KEY fk_oeuvre_role (id_role),
 --
 -- Déchargement des données de la table oeuvre
 --
@@ -325,7 +326,7 @@ INSERT INTO oeuvre (id_oeuvre, titre_oeuvre, id_artiste, dureesec, taillemb, lyr
 (13, 'Design Your Universe', 1, 153, 1.6, NULL, '2015-04-02 00:00:00', 1, 2, 1),
 (14, 'Incentive', 1, 153, 1.6, NULL, '2015-04-02 00:00:00', 1, 2, 1),
 (15, 'Unleashed 2', 1, 153, 1.6, NULL, '2015-04-02 00:00:00', 1, 2, 1),
-(16, 'Nothing\'s Wrong', 1, 153, 1.6, NULL, '2015-04-02 00:00:00', 1, 2, 1),
+(16, 'Nothing''s Wrong', 1, 153, 1.6, NULL, '2015-04-02 00:00:00', 1, 2, 1),
 
 (17, 'Tim McGraw', 2, 273, 2.48, NULL, '2010-05-17 00:00:00', 2, 3,1),
 (18, 'Picture to Burn', 2, 258, 2.35, NULL, '2010-05-14 00:00:00', 2, 5,1),
@@ -335,8 +336,8 @@ INSERT INTO oeuvre (id_oeuvre, titre_oeuvre, id_artiste, dureesec, taillemb, lyr
 (22, 'The Outside', 2, 260, 2.36, NULL, '2010-06-07 00:00:00', 2, 2,2),
 (23, 'Tied Together with a Smile', 2, 307, 2.79, NULL, '2010-05-27 00:00:00', 2, 4,2),
 (24, 'Stay Beautiful', 2, 330, 3.1, NULL, '2010-06-07 00:00:00', 2, 5,1),
-(25, 'Should\'ve Said No', 2, 252, 2.29, NULL, '2010-05-22 00:00:00', 2, 6,2),
-(26, 'Mary\'s Song (Oh My My My)', 2, 278, 2.53, NULL, '2010-05-27 00:00:00', 2, 1,3),
+(25, 'Should''ve Said No', 2, 252, 2.29, NULL, '2010-05-22 00:00:00', 2, 6,2),
+(26, 'Mary''s Song (Oh My My My)', 2, 278, 2.53, NULL, '2010-05-27 00:00:00', 2, 1,3),
 (27, 'Our Song', 2, 250, 2.27, NULL, '2010-05-21 00:00:00', 2, 2,3),
 
 (28, 'Emmenez-moi', 3, 368, 3.35, NULL, '2010-06-07 00:00:00', 3, 1,1),
@@ -347,10 +348,10 @@ INSERT INTO oeuvre (id_oeuvre, titre_oeuvre, id_artiste, dureesec, taillemb, lyr
 (33, 'Je reviens Fanny', 3, 229, 2.08, NULL, '2014-06-21 00:00:00', 3, 5,1),
 (34, 'Yerushalaim', 3, 234, 2.13, NULL, '2014-06-20 00:00:00', 3, 5,2),
 (35, 'Entre nous', 3, 220, 2, NULL, '2014-06-07 00:00:00', 3, 5,2),
-(36, 'J\'aimerais', 3, 204, 1.85, NULL, '2014-06-16 00:00:00', 3, 5,1),
+(36, 'J''aimerais', 3, 204, 1.85, NULL, '2014-06-16 00:00:00', 3, 5,1),
 (37, 'Il te faudra bien revenir', 3, 248, 2.25, NULL, '2014-06-14 00:00:00', 3, 6,1),
 (38, 'Au voleur', 3, 237, 2.15, NULL, '2014-06-28 00:00:00', 3, 5,1),
-(39, 'Tout s\'en va', 3, 230, 2.09, NULL, '2014-06-27 00:00:00', 3, 5,1),
+(39, 'Tout s''en va', 3, 230, 2.09, NULL, '2014-06-27 00:00:00', 3, 5,1),
 
 (40, 'Is This Love', 4, 228, 2.07, NULL, '2014-06-22 00:00:00', 4, 5,1),
 (41, 'No Woman, No Cry', 4, 234, 2.13, NULL, '2014-07-04 00:00:00', 4, 5,1),
@@ -389,7 +390,7 @@ INSERT INTO oeuvre (id_oeuvre, titre_oeuvre, id_artiste, dureesec, taillemb, lyr
 (72, 'Never Grow Up', 2, 175, 2.12, NULL, '2018-09-15 00:00:00', 6, 4,1),
 
 (73, 'Geyser', 6, 193, 3.1, NULL, '2018-09-16 00:00:00', 7, 4,1),
-(74, 'Why Didn\'t You Stop Me?', 6, 193, 3.1, NULL, '2022-04-08 10:10:29', 7, 4,1),
+(74, 'Why Didn''t You Stop Me?', 6, 193, 3.1, NULL, '2022-04-08 10:10:29', 7, 4,1),
 (75, 'Old Friend', 6, 221, 3.5, NULL, '2022-04-08 10:10:29', 7, 5,1),
 (76, 'A Pearl', 6, 234, 3.9, NULL, '2022-04-08 10:10:29', 7, 5,1),
 (77, 'Lonesome Love', 6, 235, 3.91, NULL, '2022-04-08 10:10:29', 7, 5,1),
@@ -397,7 +398,7 @@ INSERT INTO oeuvre (id_oeuvre, titre_oeuvre, id_artiste, dureesec, taillemb, lyr
 (79, 'Me and My Husband', 6, 291, 4.11, NULL, '2022-04-08 10:10:29', 7, 7,1),
 (80, 'Come into the Water', 6, 211, 3.21, NULL, '2022-04-08 10:10:29', 7, 5,1),
 
-(81, 'Wanna Be Startin\' Somethin\'', 7, 210, 3.17, NULL, '2022-04-08 10:10:29', 8, 5,1),
+(81, 'Wanna Be Startin'' Somethin''', 7, 210, 3.17, NULL, '2022-04-08 10:10:29', 8, 5,1),
 (82, 'Baby Be Mine', 7, 202, 3.04, NULL, '2022-04-08 10:10:29', 8, 5,1),
 (83, 'The Girl Is Mine', 7, 274, 3.45, NULL, '2022-04-08 10:10:29', 8, 6,1),
 (100, 'Thriller', 7, 243, 3.25, NULL, '2022-04-08 10:10:29', 8, 6,1),
@@ -407,19 +408,19 @@ INSERT INTO oeuvre (id_oeuvre, titre_oeuvre, id_artiste, dureesec, taillemb, lyr
 (104, 'The Lady in My Life', 7, 304, 4.25, NULL, '2022-04-08 10:10:29', 8, 7,1),
 
 (105, 'One Night Love Affair', 8, 210, 3.17, NULL, '2022-04-08 10:10:29', 9, 5,1),
-(106, 'She\'s Only Happy When She\'s Dancin\'', 8, 202, 3.04, NULL, '2022-04-08 10:10:29', 8, 5,1),
+(106, 'She''s Only Happy When She''s Dancin''', 8, 202, 3.04, NULL, '2022-04-08 10:10:29', 8, 5,1),
 (107, 'Run to You', 8, 274, 3.45, NULL, '2022-04-08 10:10:29', 9, 6,1),
 (108, 'Heaven', 8, 243, 3.25, NULL, '2022-04-08 10:10:29', 9, 6,1),
 (109, 'Somebody', 8, 243, 3.25, NULL, '2022-04-08 10:10:29', 9, 6,1),
-(110, 'Summer of \'69', 8, 269, 3.35, NULL, '2022-04-08 10:10:29', 9, 6,1),
+(110, 'Summer of ''69', 8, 269, 3.35, NULL, '2022-04-08 10:10:29', 9, 6,1),
 (111, 'Kids Wanna Rock', 8, 342, 4.45, NULL, '2022-04-08 10:10:29', 9, 8,1),
-(112, 'It\'s Only Love', 8, 304, 4.25, NULL, '2022-04-08 10:10:29', 9, 7,1),
+(112, 'It''s Only Love', 8, 304, 4.25, NULL, '2022-04-08 10:10:29', 9, 7,1),
 
 (113, 'Norman Fucking Rockwell', 5, 173, 2.25, NULL, '2022-04-08 10:10:29', 10, 4,1),
 (114, 'Mariners Apartment Complex', 5, 280, 3.35, NULL, '2022-04-08 10:10:29', 10, 7,2),
 (115, 'Venice Bitch', 5, 202, 3.04, NULL, '2022-04-08 10:10:29', 10, 5,1),
 (116, 'Fuck It I Love You', 5, 274, 3.45, NULL, '2022-04-08 10:10:29', 10, 6,1),
-(117, 'Doin\' Time', 5, 243, 3.25, NULL, '2022-04-08 10:10:29', 10, 6,1),
+(117, 'Doin'' Time', 5, 243, 3.25, NULL, '2022-04-08 10:10:29', 10, 6,1),
 (118, 'Love Song', 5, 243, 3.25, NULL, '2022-04-08 10:10:29', 10, 6,1),
 (119, 'Cinnamon Girl', 5, 269, 3.35, NULL, '2022-04-08 10:10:29', 10, 6,1),
 (120, 'How to Disappear', 5, 342, 4.45, NULL, '2022-04-08 10:10:29', 10, 8,1),
@@ -441,9 +442,9 @@ INSERT INTO oeuvre (id_oeuvre, titre_oeuvre, id_artiste, dureesec, taillemb, lyr
 (134, 'Flamenco Sketches', 9, 243, 3.25, NULL, '2022-04-08 10:10:29', 12, 6,1),
 
 (138, 'The Horizontal Bop', 10, 210, 3.17, NULL, '2022-04-08 10:10:29', 13, 5,1),
-(139, 'You\'ll Accomp\'ny Me', 10, 202, 3.04, NULL, '2022-04-08 10:10:29', 13, 5,1),
+(139, 'You''ll Accomp''ny Me', 10, 202, 3.04, NULL, '2022-04-08 10:10:29', 13, 5,1),
 (140, 'Her Strut', 10, 274, 3.45, NULL, '2022-04-08 10:10:29', 13, 6,1),
-(141, 'No Man\'s Land', 10, 243, 3.25, NULL, '2022-04-08 10:10:29', 13, 6,1),
+(141, 'No Man''s Land', 10, 243, 3.25, NULL, '2022-04-08 10:10:29', 13, 6,1),
 (142, 'Long Twin Silver Line', 10, 243, 3.25, NULL, '2022-04-08 10:10:29', 13, 6,1),
 (143, 'Against the Wind', 10, 269, 3.35, NULL, '2022-04-08 10:10:29', 13, 6,1),
 (144, 'Good for Me', 10, 342, 4.45, NULL, '2022-04-08 10:10:29', 13, 8,1),
@@ -451,7 +452,7 @@ INSERT INTO oeuvre (id_oeuvre, titre_oeuvre, id_artiste, dureesec, taillemb, lyr
 
 (146, 'Black Eyes', 11, 210, 3.17, NULL, '2022-04-08 10:10:29', 14, 5,1),
 (147, 'La Vie en rose', 11, 202, 3.04, NULL, '2022-04-08 10:10:29', 14, 5,1),
-(148, 'Maybe It\'s Time', 11, 274, 3.45, NULL, '2022-04-08 10:10:29', 14, 6,1),
+(148, 'Maybe It''s Time', 11, 274, 3.45, NULL, '2022-04-08 10:10:29', 14, 6,1),
 (149, 'Out of Time', 11, 243, 3.25, NULL, '2022-04-08 10:10:29', 14, 6,1),
 (150, 'Alibi', 11, 243, 3.25, NULL, '2022-04-08 10:10:29', 14, 6,1),
 (151, 'Shallow', 11, 269, 3.35, NULL, '2022-04-08 10:10:29', 14, 6,1),
@@ -489,10 +490,12 @@ CREATE TABLE utilisateur (
   courriel varchar(100) NOT NULL UNIQUE,
   mot_passe varchar(75) NOT NULL,
   id_ville int NOT NULL,
-  age int NULL,  -- CHECK (courriel REGEXP "^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$"),
-  constraint chk_courriel check(regexp_like(courriel, '^[[:alnum:]\\._]+@[[:alnum:]]+(\\.[[:alnum:]]{2}){0,1}\.[a-z]{2,3}$','i')),
+  age int NULL,  
+  constraint chk_courriel check(courriel regexp '^[[:alnum:]\\._]+@[[:alnum:]]+(\\.[[:alnum:]]{2}){0,1}\.[a-z]{2,3}$'),
   CONSTRAINT fk_utilisateur_ville FOREIGN KEY (id_ville) REFERENCES ville(id_ville)
 ) ENGINE=InnoDB;
+-- CHECK (courriel REGEXP "^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$"),
+  --constraint chk_courriel check(regexp_like(courriel, '^[[:alnum:]\\._]+@[[:alnum:]]+(\\.[[:alnum:]]{2}){0,1}\.[a-z]{2,3}$','i')),
 
 /* Ceci est pour vous montrer les mots de passe avant le hashage.
 INSERT INTO utilisateur (id_utilisateur, nom, mot_passe, courriel, age) VALUES

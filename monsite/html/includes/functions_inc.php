@@ -24,24 +24,6 @@ $titleName = str_replace('page', '', $titleName);
 // echo "$titleName<br>";
 
 
-function seConnecterPDO()
-{
-    try {
-        //echo "<h1>Bases de données MySQL (PDO)</h1>";
-        $servername = getenv('MON_HOST');
-        $username = 'root';
-        $password = 'rootpassword';
-        $bd = 'tp2_media_web';
-        $conn = new mysqli($servername, $username, $password, $bd); 
-        //$conn = new PDO("mysql:host=$servername; dbname=$bd; charset=utf8", $username, $password);
-        //echo "Sa fonctionne !!!";
-    } catch (Exception $e) {
-        die('Erreur lors de la connexion à la BD : ' . $e->getMessage());
-    }
-
-    return $conn;
-}
-
 // function seConnecterPDO()
 // {
 //     try {
@@ -50,8 +32,8 @@ function seConnecterPDO()
 //         $username = 'root';
 //         $password = 'rootpassword';
 //         $bd = 'tp2_media_web';
-//         
-//         $conn = new PDO("mysql:host=$servername; dbname=$bd; charset=utf8", $username, $password);
+//         $conn = new mysqli($servername, $username, $password, $bd); 
+//         //$conn = new PDO("mysql:host=$servername; dbname=$bd; charset=utf8", $username, $password);
 //         //echo "Sa fonctionne !!!";
 //     } catch (Exception $e) {
 //         die('Erreur lors de la connexion à la BD : ' . $e->getMessage());
@@ -59,6 +41,24 @@ function seConnecterPDO()
 
 //     return $conn;
 // }
+
+function seConnecterPDO()
+{
+    try {
+        //echo "<h1>Bases de données MySQL (PDO)</h1>";
+        $servername = getenv('MON_HOST');
+        $username = 'root';
+        $password = 'rootpassword';
+        $bd = 'tp2_media_web';
+        
+        $conn = new PDO("mysql:host=$servername; dbname=$bd; charset=utf8", $username, $password);
+        //echo "Sa fonctionne !!!";
+    } catch (Exception $e) {
+        die('Erreur lors de la connexion à la BD : ' . $e->getMessage());
+    }
+
+    return $conn;
+}
 
 
 //Page Menu
@@ -114,6 +114,8 @@ function chercherUser($p_courriel, $p_password)
                 //À supprimer
                 //var_dump($donnees);
                 //var_dump($newUtilisateur);
+                //$reponse->close();
+                //$reponse->mysqli_close($conn);
                 $reponse->closeCursor();
                 $conn = null;
                 return $newUtilisateur;
@@ -157,6 +159,7 @@ function chercherAlbums()
         }
 
         $reponse->closeCursor();
+        // $reponse->close();
         $conn = null;
         return $listeAlbums;
     } catch (PDOException $e) {
@@ -204,6 +207,7 @@ function chercherOeuvres($p_idAlbum)
         }
 
         $reponse->closeCursor();
+        // $reponse->close();
         $conn = null;
         return $listeOeuvres;
     } catch (PDOException $e) {
@@ -250,6 +254,7 @@ function ajouterArtiste()
         ));
 
         $rq->closeCursor();
+        // $rq->close();
         $conn = null;
         return true;
     } catch (PDOException $e) {
@@ -273,6 +278,7 @@ function getListeVilles()
             $villes[$idVille] =  $nomVille;
         }
         $reponse->closeCursor();
+        // $reponse->close();
         $conn = null;
         return $villes;
     } catch (PDOException $e) {
@@ -297,6 +303,7 @@ function getListeArtistes()
             array_push($listeArtistes, $artiste);
         }
         $reponse->closeCursor();
+        // $reponse->close();
         $conn = null;
         return $listeArtistes;
     } catch (PDOException $e) {
@@ -358,6 +365,7 @@ function ajouterAlbum($p_album)
         ));
 
         $rq->closeCursor();
+        // $rq->close();
         $conn = null;
         return true;
     } catch (PDOException $e) {
@@ -381,6 +389,7 @@ function getListeRole()
             $roles[$idRole] = $roleDes;
         }
         $reponse->closeCursor();
+        // $reponse->close();
         $conn = null;
         return $roles;
     } catch (PDOException $e) {
@@ -429,6 +438,7 @@ function ajouterOeuvre()
             $oeuvre->getIdRole()
         ));
         $rq->closeCursor();
+        // $rq->close();
         $conn = null;
 
         return true;
@@ -451,8 +461,10 @@ function UtilisateurExiste($pCourriel)
         // $reponse->bindValue(':courr', strtoupper($pCourriel));
         $reponse->execute(array($pCourriel));
         $count = $reponse->rowCount();
+        // $count = $reponse->num_rows();
 
         $reponse->closeCursor();
+        // $reponse->close();
         $conn = null;
 
         if ($count > 0) {
@@ -486,6 +498,7 @@ function AjouterUtilisateur()
         $rq->execute(array(null, $nom, $courriel, $pmPasse, $idVille, $age));
 
         $rq->closeCursor();
+        // $rq->close();
         $conn = null;
         //return true;
 
@@ -522,6 +535,7 @@ function getListeAlbums()
         }
 
         $reponse->closeCursor();
+        // $reponse->close();
         $conn = null;
         return $listeAlbums;
     } catch (PDOException $e) {
@@ -556,6 +570,7 @@ function getListeOeuvres()
         }
 
         $reponse->closeCursor();
+        // $reponse->close();
         $conn = null;
         return $listeOeuvres;
     } catch (PDOException $e) {
@@ -596,6 +611,7 @@ function chercherOeuvre($p_idOeuvre)
             //array_push($listeOeuvres, $newOeuvre);
 
             $reponse->closeCursor();
+            // $reponse->close();
             $conn = null;
             return $newOeuvre;
         }
@@ -626,6 +642,7 @@ function chercherAlbum($p_idAlbum)
             //array_push($listeAlbums, $newAlbum);
 
             $reponse->closeCursor();
+            // $reponse->close();
             $conn = null;
             return $newAlbum;
         }
@@ -716,6 +733,7 @@ function trouverIdCommande(int $p_idUtilisateur, Datetime $p_dateCommande)
             $idCommande = $donnees['id_commande'];
 
             $reponse->closeCursor();
+            // $reponse->close();
             $conn = null;
             return $idCommande;
         }
