@@ -11,27 +11,32 @@ services:
 
       
       php1:
-            build: './serveur1/php/'
+            build: './php/'
             networks:
                   - backend1
             restart: on-failure
+            environment:
+                  MON_SERVEUR:      Serveur1 - TP2
+                  MON_HOST:   mariadb1
             volumes:
-                  #- ./serveur1/monsite/html:/usr/share/nginx/html
-                  - ./serveur1/monsite/html:/srv/htdocs/
+                  - ./monsite/html:/usr/local/apache2/htdocs/
+                  #- ./monsite/html:/var/www/html
       php2:
-            build: './serveur2/php/'
+            build: './php/'
             networks:
                   - backend2
             restart: on-failure
+            environment:
+                  MON_SERVEUR:      Serveur2 - TP2
+                  MON_HOST:   mariadb2
             volumes:
-                  #- ./serveur2/monsite/html:/usr/share/nginx/html
-                  - ./serveur2/monsite/html:/srv/htdocs/
+                  - ./monsite/html:/usr/local/apache2/htdocs/
+                  #- ./monsite/html:/var/www/html
 
 
 #sudo chown -R $USER <path-to-folder>
       serveur1:
-            #image: httpd:alpine # utilise la version httpd:lapine 
-            build: './serveur1/monsite/'
+            image: httpd:alpine # utilise la version httpd:lapine 
             # depends_on:
             #       - php1
             #       - mariadb1
@@ -39,11 +44,10 @@ services:
                   - frontend
                   - backend1
             volumes:
-                  #- ./serveur1/monsite/html:/usr/local/apache2/htdocs/
-                  - ./serveur1/monsite/html:/srv/htdocs/
+                  - ./monsite/html:/usr/local/apache2/htdocs
+                  - ./serveur1/conf/httpd.conf:/usr/local/apache2/conf/httpd.conf
       serveur2:
-            #image: httpd:alpine # utilise la version httpd:alpine 
-            build: './serveur2/monsite/'
+            image: httpd:alpine # utilise la version httpd:alpine 
             # depends_on:
             #       - php2
             #       - mariadb2
@@ -51,8 +55,8 @@ services:
                   - frontend
                   - backend2
             volumes:
-                  #- ./serveur2/monsite/html:/usr/local/apache2/htdocs/
-                  - ./serveur2/monsite/html:/srv/htdocs/
+                  - ./monsite/html:/usr/local/apache2/htdocs
+                  - ./serveur2/conf/httpd.conf:/usr/local/apache2/conf/httpd.conf
 
 
       mariadb1:
@@ -60,19 +64,29 @@ services:
             networks:
                   - backend1
             environment:
+                  #- MYSQL_ROOT_USER=root
                   - MYSQL_ROOT_PASSWORD=rootpassword
+                  #- MYSQL_DATABASE=tp2_media_web
+                  #- MYSQL_USER=admin
+                  #- MYSQL_PASSWORD=rootpassword
             restart: on-failure
             volumes:
-                  - ./serveur1/mariadb/dbdata:/var/lib/mysql         
+                  - ./serveur1/mariadb/dbdata:/var/lib/mysql
+                  - ./monsite/SQL/init.sql:/docker-entrypoint-initdb.d/init.sql
       mariadb2:
             image: mariadb:latest
             networks:
                   - backend2
             environment:
+                  #- MYSQL_ROOT_USER=root
                   - MYSQL_ROOT_PASSWORD=rootpassword
+                  #- MYSQL_DATABASE=tp2_media_web
+                  #- MYSQL_USER=admin
+                  #- MYSQL_PASSWORD=rootpassword
             restart: on-failure
             volumes:
-                  - ./serveur2/mariadb/dbdata:/var/lib/mysql  
+                  - ./serveur2/mariadb/dbdata:/var/lib/mysql
+                  - ./monsite/SQL/init.sql:/docker-entrypoint-initdb.d/init.sql
 
 
 networks:
