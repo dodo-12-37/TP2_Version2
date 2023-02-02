@@ -16,8 +16,8 @@ services:
                   - backend1
             restart: on-failure
             environment:
-                  MON_SERVEUR:      Serveur1 - TP2
-                  MON_HOST:   mariadb1
+                  MON_SERVEUR:      Serveur1 - PHP1 - TP2
+                  MON_HOST:   MariaDB1
             volumes:
                   - ./monsite/html:/usr/local/apache2/htdocs/
                   #- ./monsite/html:/var/www/html
@@ -27,8 +27,8 @@ services:
                   - backend2
             restart: on-failure
             environment:
-                  MON_SERVEUR:      Serveur2 - TP2
-                  MON_HOST:   mariadb2
+                  MON_SERVEUR:      Serveur2 - PHP2 - TP2
+                  MON_HOST:   MariaDB2
             volumes:
                   - ./monsite/html:/usr/local/apache2/htdocs/
                   #- ./monsite/html:/var/www/html
