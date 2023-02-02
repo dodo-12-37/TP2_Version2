@@ -18,23 +18,34 @@ require_once($_SERVER['DOCUMENT_ROOT']."/includes/entete_inc.php");
         artistes favoris. Inscrivez-vous sur la page d'inscription et commander vos oeuvres sur la page des commandes.
         Notre site vous offrira de nouvelle options dans un futur proche et la quantité d'oeuvres disponibles ne cessera
         de s'accroître. Nous vous promettons plein d'agréables surprises!</p>
+    <div class="text-center bg-danger text-warning">
+        <h1>TP2 Nginx LoadBalancer</h1>
+        <p>Wow! Encore une page Web fait par DL!</p>
 
-    <!-- Ajout cours ISS -->
-    <h3 class="text-center my-4">Tentative de connexion MariaDB depuis PHP...</h3>
-
-    <?php  
-    $host = getenv('MON_HOST'); 
-    $user = 'root'; 
-    $pass = 'rootpassword'; 
-    $conn = new mysqli($host, $user, $pass); 
-
-    if ($conn->connect_error) { 
-        die("La connexion a échoué: " . $conn->connect_error); 
-    }  
-
-    echo "Connexion réussie à MariaDB!"; 
-    //phpinfo();
-    ?>
+        <h3>Je te test!</h3>
+        <h4>Tentative de connexion 
+            <?php
+            echo getenv('MON_HOST')
+            ?> 
+        depuis 
+        <?php
+            echo getenv('MON_SERVEUR')
+            ?> ...</h4>
+            
+        <?php  
+        $host = getenv('MON_HOST'); 
+        $user = 'root'; 
+        $pass = 'rootpassword'; 
+        $conn = new mysqli($host, $user, $pass); 
+        
+        if ($conn->connect_error) { 
+            die("La connexion a ". getenv('MON_HOST') ." échoué: " . $conn->connect_error); 
+        }  
+        
+        echo "Connexion réussie à ". getenv('MON_HOST'). "!"; 
+        //phpinfo();
+        ?>
+    </div>
 </main>
 
 <?php
