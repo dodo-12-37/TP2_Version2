@@ -35,7 +35,7 @@ $(document).ready(function () {
         let albumID = $('#sltAlbums').val().split(":")[0];
 
         $.ajax({
-            url: 'loadTracklist.php',
+            url: DOCUMENT_ROOT+ 'loadTracklist.php',
             dataType: "html",
             method: 'POST',
             data: {
@@ -56,7 +56,7 @@ $(document).ready(function () {
 
         $.ajax({
             method: 'POST',
-            url: 'loadUpdateCart.php',
+            url: DOCUMENT_ROOT + 'loadUpdateCart.php',
             data: {
                 Index: indexVal,
                 Quantite: quantiteVal
