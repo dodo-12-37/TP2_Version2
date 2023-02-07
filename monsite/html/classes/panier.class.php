@@ -4,13 +4,26 @@ require_once($_SERVER['DOCUMENT_ROOT']."/classes/produit.class.php");
 
 class Panier
 {
-    protected $m_listeCommandes = array();
+    private $m_listeCommandes = array();
     private $m_prixTotal;
     private $m_rabais;
     private $m_prixTotalAvantTaxes;
     private $m_taxes;
     private $m_prixTotalAvecTaxes;
     private $m_etatCommande;
+
+    // public function __construct()
+    // {
+    //     $this->m_listeCommandes = array();
+    //     $this->setPrixTotal();
+    //     $this->setRabais();
+    //     $this->setPrixTotalAvantTaxes();
+    //     $this->setTaxes();
+    //     $this->setPrixTotalAvecTaxes();
+    //     $this->setEtat("En cours");
+    // }
+
+
 
     public function getPrixTotal()
     {

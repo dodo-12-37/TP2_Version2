@@ -36,7 +36,7 @@ if (isset($_SESSION)) {
                             $estValide = false;
                         }
                     }
-                    
+                    $panier = new Panier();
                     if ($estValide) {
                         if (isset($_SESSION['cart'])) {
                             $panier = unserialize($_SESSION['cart']);
