@@ -1,6 +1,7 @@
 <?php
 // require_once $_SERVER['DOCUMENT_ROOT'].'/classes/Produit.class.php';
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/produit.class.php");
+
 class Panier
 {
     protected $m_listeCommandes = array();

@@ -42,7 +42,7 @@ if (isset($_SESSION)) {
                             $panier = unserialize($_SESSION['cart']);
                         } else {
                             $panier = new Panier();
-                            $panier->setEtat('En cours');
+                            $panier->setEtat("En cours");
                         }
                         
                         $newOeuvre = chercherOeuvre(explode(":", $connOeuvre)[0]);
@@ -55,47 +55,47 @@ if (isset($_SESSION)) {
                         unset($_POST);
                         header("Location: pageCommander.php");
                         exit();
-                        break;
                     }
                 }
+                break;
                 
-                case 'resetCommande':
+            case 'resetCommande':
+                if (isset($_SESSION['cart'])) {
+                    unset($_SESSION['cart']);
+                    unset($_POST);
+                    header("Location: pageCommander.php");
+                    exit();
+                }
+                break;
+                
+            case 'submitCommande':
+                if (isset($_SESSION['cart']) && isset($_SESSION['login'])) {
+                    $panier = unserialize($_SESSION['cart']);
+                    $idUtilisateur = unserialize($_SESSION['login'])->getID();
+                    
+                    $datetime = new DateTime();
+                    $timezone = new DateTimeZone('America/Toronto');
+                    $datetime->setTimezone($timezone);
+                    
+                    passerCommande($idUtilisateur, $datetime, $panier);
+                    
                     if (isset($_SESSION['cart'])) {
                         unset($_SESSION['cart']);
                         unset($_POST);
                         header("Location: pageCommander.php");
                         exit();
                     }
-                    break;
                     
-                    case 'submitCommande':
-                        if (isset($_SESSION['cart']) && isset($_SESSION['login'])) {
-                            $panier = unserialize($_SESSION['cart']);
-                            $idUtilisateur = unserialize($_SESSION['login'])->getID();
-                            
-                            $datetime = new DateTime();
-                            $timezone = new DateTimeZone('America/Toronto');
-                            $datetime->setTimezone($timezone);
-                            
-                            passerCommande($idUtilisateur, $datetime, $panier);
-                            
-                            if (isset($_SESSION['cart'])) {
-                                unset($_SESSION['cart']);
-                                unset($_POST);
-                                header("Location: pageCommander.php");
-                                exit();
-                            }
-                            
-                        } else {
-                            //Rien a acheter
-                            
-                        }
-                        break;
-                        
-                        default:
-                        # code...
-                        break;
-                    }
+                } else {
+                    //Rien a acheter
+                    
+                }
+                break;
+                
+                default:
+                # code...
+                break;
+        }
     }
 }
 
@@ -104,7 +104,6 @@ require_once($_SERVER['DOCUMENT_ROOT']."/includes/entete_inc.php");
 
 <main class="col col-sm-9 col-lg-10 pt-2 pb-4">
     <h2 class="text-center my-4">Commander</h2>
-    <!-- <?= $_POST["SHIT"] ?> -->
     <div class="form-row justify-content-center">
         <!-- 1er form -->
         <form id="formAjouterCommande" class="form  justify-content-center was-validated col-12 col-md-4" action="<?= $_SERVER['PHP_SELF'] ?>" method="post">

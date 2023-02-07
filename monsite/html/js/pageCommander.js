@@ -18,8 +18,8 @@ $(document).ready(function () {
 
         if (!validerValeurEntreMinMax($("#nbOeuvre").val(), 1, 10)) {
             estValide = false;
-            alert("Le nombre d'oeuvres n'est pas entre 1 et 10 inclus. Recommencer.")
-            $("#nbOeuvre").val() = 1;
+            alert("Le nombre d'oeuvres n'est pas entre 1 et 10 inclus. Recommencer.");
+            $("#nbOeuvre").val(1);
         }
 
         if (estValide) {
@@ -35,7 +35,7 @@ $(document).ready(function () {
         let albumID = $('#sltAlbums').val().split(":")[0];
 
         $.ajax({
-            url: DOCUMENT_ROOT+ 'loadTracklist.php',
+            url: 'loadTracklist.php',
             dataType: "html",
             method: 'POST',
             data: {
@@ -56,7 +56,7 @@ $(document).ready(function () {
 
         $.ajax({
             method: 'POST',
-            url: DOCUMENT_ROOT + 'loadUpdateCart.php',
+            url: 'loadUpdateCart.php',
             data: {
                 Index: indexVal,
                 Quantite: quantiteVal
