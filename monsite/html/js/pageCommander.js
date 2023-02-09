@@ -18,8 +18,8 @@ $(document).ready(function () {
 
         if (!validerValeurEntreMinMax($("#nbOeuvre").val(), 1, 10)) {
             estValide = false;
-            alert("Le nombre d'oeuvres n'est pas entre 1 et 10 inclus. Recommencer.")
-            $("#nbOeuvre").val() = 1;
+            alert("Le nombre d'oeuvres n'est pas entre 1 et 10 inclus. Recommencer.");
+            $("#nbOeuvre").val(1);
         }
 
         if (estValide) {

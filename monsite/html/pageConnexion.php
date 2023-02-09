@@ -1,12 +1,12 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']."/includes/entete_inc.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/includes/functions_inc.php");
 
 if (isset($_SESSION)) {
     //https://bcrypt.online/    pour créer des HASH bcrypt
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (isset($_POST['connexion']) && $_POST['connexion'] == 'submit') {
             $estValide = true;
- 
+            
             if (!isset($_POST["courriel"])) {
                 $erreurCourriel = "Le courriel est requis.";
             } else {
@@ -17,7 +17,7 @@ if (isset($_SESSION)) {
                     $estValide = false;
                 }
             }
-
+            
             if (!isset($_POST["mot_de_passe"])) {
                 $erreurPassword = "Le mot de passe est requis";
             } else {
@@ -28,10 +28,10 @@ if (isset($_SESSION)) {
                     $estValide = false;
                 }
             }
-
+            
             if ($estValide) {
                 $user = chercherUser($connCourriel, $connPassword);
-
+                
                 if (isset($user) && $user != null) {
                     $_SESSION['login'] = serialize($user);
                     $_SESSION['type'] = $user->getType();
@@ -44,12 +44,14 @@ if (isset($_SESSION)) {
         }
     }
 }
+
+require_once($_SERVER['DOCUMENT_ROOT']."/includes/entete_inc.php");
 ?>
 
 <!-- Binh, Michel, Dom -->
 <main class="col col-sm-9 col-lg-10 pt-2 pb-4">
     <h2 class="text-center my-4">Connexion</h2>
-
+    
     <form action="<?= $_SERVER['PHP_SELF'] ?>" method="post" style="max-width: 800px;" class="mx-auto my-4">
         <div class="form-row">
             <div class="form-group col-6">
