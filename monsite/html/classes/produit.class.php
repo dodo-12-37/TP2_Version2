@@ -85,9 +85,8 @@ class produit
     
 
 
-    public function __toString()
-    {
-        return $this->m_Id . " " . $this->m_Name . " " . $this->m_Price;
-    }
+    // public function __toString()
+    // {
+    //     return $this->m_Id . " " . $this->m_Name . " " . $this->m_Price;
+    // }
 }
-

@@ -1,5 +1,5 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']."/includes/entete_inc.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/includes/functions_inc.php");
 
 if (!isset($_SESSION['type'])) {
     header("Location: pageConnexion.php");
@@ -23,8 +23,8 @@ if (!isset($_SESSION['type'])) {
     }
 }
 // if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-//     $_SESSION['postdata'] = $_POST;
-
+    //     $_SESSION['postdata'] = $_POST;
+    
 //     AjouterOeuvre();
 
 //     unset($_POST);
@@ -32,6 +32,7 @@ if (!isset($_SESSION['type'])) {
 //     exit();
 // }
 
+require_once($_SERVER['DOCUMENT_ROOT']."/includes/entete_inc.php");
 ?>
 
 <main class="col col-sm-9 col-lg-10 pt-2 pb-4">

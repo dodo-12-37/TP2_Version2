@@ -2,7 +2,7 @@
 
 use JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
 
-require_once($_SERVER['DOCUMENT_ROOT']."/includes/entete_inc.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/includes/functions_inc.php");
 
 if (!isset($_SESSION['type'])) {
     header("Location: pageConnexion.php");
@@ -14,6 +14,7 @@ if (!isset($_SESSION['type'])) {
     }
 }
 
+require_once($_SERVER['DOCUMENT_ROOT']."/includes/entete_inc.php");
 // require_once("classes/album.class.php");
 
 $errMess = "";

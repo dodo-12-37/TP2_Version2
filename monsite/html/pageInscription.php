@@ -1,5 +1,5 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']."/includes/entete_inc.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/includes/functions_inc.php");
 
 if (isset($_SESSION['type'])) {
     if ($_SESSION['type'] != 'visiteur') {
@@ -10,12 +10,12 @@ if (isset($_SESSION['type'])) {
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     //$_SESSION['postdata'] = $_POST;
-
+    
     if (isset($_POST['inscriptionSubmit']) && $_POST['inscriptionSubmit'] == 'submit') {
         $motPasse = ($_POST['mot_de_passe']);
         $confirmer_mdp = ($_POST['confirmer_mdp']);
         $courriel = filter_var($_POST['courriel'], FILTER_SANITIZE_EMAIL);
-
+        
         if ($motPasse == $confirmer_mdp) {
             if (!UtilisateurExiste($courriel)) {
                 AjouterUtilisateur();
@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
             $erreur = "Les mots de passe ne sont pas pareil.";
         }
-
+        
         unset($_POST);
         // header("Location: " . $_SERVER['PHP_SELF']);
         // exit();
@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 //}
 
-
+require_once($_SERVER['DOCUMENT_ROOT']."/includes/entete_inc.php");
 ?>
 <!-- Binh -->
 <main class="col col-sm-9 col-lg-10 pt-2 pb-4">

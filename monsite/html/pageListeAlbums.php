@@ -1,4 +1,5 @@
 <?php
+require_once($_SERVER['DOCUMENT_ROOT']."/includes/functions_inc.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/includes/entete_inc.php");
 ?>
 

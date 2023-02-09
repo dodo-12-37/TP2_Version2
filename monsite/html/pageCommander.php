@@ -1,5 +1,5 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']."/includes/entete_inc.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/includes/functions_inc.php");
 
 if (!isset($_SESSION['type'])) {
     header("Location: pageConnexion.php");
@@ -8,57 +8,58 @@ if (!isset($_SESSION['type'])) {
 
 if (isset($_SESSION)) {
     if (isset($_POST['action'])) {
-
+        
         switch ($_POST['action']) {
             case 'addCommande':
                 if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $estValide = true;
-
+                    
                     if (!isset($_POST["sltAlbums"])) {
                         $erreurAlbum = "L'album est requis.";
                     } else {
                         $connAlbum = ValiderEntree($_POST["sltAlbums"]);
                     }
-
+                    
                     if (!isset($_POST["sltOeuvres"])) {
                         $erreurOeuvre = "L'oeuvre est requis.";
                     } else {
                         $connOeuvre = ValiderEntree($_POST["sltOeuvres"]);
                     }
-
+                    
                     if (!isset($_POST["nbOeuvre"])) {
                         $erreurNbOeuvre = "L'album est requis.";
                     } else {
                         $connNbOeuvre = ValiderEntree($_POST["nbOeuvre"]);
-
+                        
                         if (!filter_var($connNbOeuvre, FILTER_VALIDATE_INT, ["options" => ["min_range" => 0, "max_range" => 10]])) {
                             $erreurNbOeuvre = "Le nombre d'oeuvres n'est pas entre 1 et 10 inclus. Recommencer.";
                             $estValide = false;
                         }
                     }
-
+                    
                     if ($estValide) {
                         if (isset($_SESSION['cart'])) {
                             $panier = unserialize($_SESSION['cart']);
                         } else {
-                            $panier = new Panier();
-                            $panier->setEtat('En cours');
+                            $panier = new Panier("En cours");
+                            // $panier = new Panier();
+                            // $panier->setEtat("En cours");
                         }
-
+                        
                         $newOeuvre = chercherOeuvre(explode(":", $connOeuvre)[0]);
                         $newAlbum = chercherAlbum(explode(":", $connAlbum)[0]);
                         $newProduit = new Produit($panier->getCountItems(), $newAlbum, $newOeuvre, $newOeuvre->getPrix(), $newAlbum->getImageName());
-
+                        
                         $panier->addItem($newProduit, $connNbOeuvre);
-
+                        
                         $_SESSION['cart'] = serialize($panier);
                         unset($_POST);
                         header("Location: pageCommander.php");
                         exit();
-                        break;
                     }
                 }
-
+                break;
+                
             case 'resetCommande':
                 if (isset($_SESSION['cart'])) {
                     unset($_SESSION['cart']);
@@ -67,7 +68,7 @@ if (isset($_SESSION)) {
                     exit();
                 }
                 break;
-
+                
             case 'submitCommande':
                 if (isset($_SESSION['cart']) && isset($_SESSION['login'])) {
                     $panier = unserialize($_SESSION['cart']);
@@ -76,34 +77,34 @@ if (isset($_SESSION)) {
                     $datetime = new DateTime();
                     $timezone = new DateTimeZone('America/Toronto');
                     $datetime->setTimezone($timezone);
-
+                    
                     passerCommande($idUtilisateur, $datetime, $panier);
-
+                    
                     if (isset($_SESSION['cart'])) {
                         unset($_SESSION['cart']);
                         unset($_POST);
                         header("Location: pageCommander.php");
                         exit();
                     }
-
+                    
                 } else {
                     //Rien a acheter
                     
                 }
                 break;
-
-            default:
+                
+                default:
                 # code...
                 break;
         }
     }
 }
 
+require_once($_SERVER['DOCUMENT_ROOT']."/includes/entete_inc.php");
 ?>
 
 <main class="col col-sm-9 col-lg-10 pt-2 pb-4">
     <h2 class="text-center my-4">Commander</h2>
-    <!-- <?= $_POST["SHIT"] ?> -->
     <div class="form-row justify-content-center">
         <!-- 1er form -->
         <form id="formAjouterCommande" class="form  justify-content-center was-validated col-12 col-md-4" action="<?= $_SERVER['PHP_SELF'] ?>" method="post">

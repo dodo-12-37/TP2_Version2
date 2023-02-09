@@ -1,7 +1,7 @@
 <?php
 //https://stackoverflow.com/questions/20308478/where-exactly-do-i-put-a-session-start
 // define('__ROOT__', dirname(__FILE__));
-require_once($_SERVER['DOCUMENT_ROOT']."/includes/functions_inc.php");
+// require_once($_SERVER['DOCUMENT_ROOT']."/includes/functions_inc.php");
 ?>
 
 <!DOCTYPE html>
@@ -29,6 +29,10 @@ require_once($_SERVER['DOCUMENT_ROOT']."/includes/functions_inc.php");
     ?>
 
     <script defer src="js/nav.js"></script>
+    
+    <!-- <script>
+        var DOCUMENT_ROOT = "<?= $_SERVER['DOCUMENT_ROOT'] ?>";
+    </script> -->
 </head>
 
 <body>

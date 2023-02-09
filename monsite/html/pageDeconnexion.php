@@ -1,10 +1,5 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']."/includes/entete_inc.php");
-
-if (!isset($_SESSION['type'])) {
-    header("Location: pageConnexion.php");
-    exit();
-}
+require_once($_SERVER['DOCUMENT_ROOT']."/includes/functions_inc.php");
 
 if (isset($_POST['deconnexion_submit']) && $_POST['deconnexion_submit'] == 'submit') {
     if (isset($_SESSION)) {
@@ -14,6 +9,13 @@ if (isset($_POST['deconnexion_submit']) && $_POST['deconnexion_submit'] == 'subm
         exit();
     }
 }
+
+if (!isset($_SESSION['type'])) {
+    header("Location: pageConnexion.php");
+    exit();
+}
+
+require_once($_SERVER['DOCUMENT_ROOT']."/includes/entete_inc.php");
 ?>
 
 <!-- Binh, Michel, Dom -->

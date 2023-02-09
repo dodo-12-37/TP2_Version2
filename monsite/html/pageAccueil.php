@@ -1,4 +1,5 @@
 <?php
+require_once($_SERVER['DOCUMENT_ROOT']."/includes/functions_inc.php");
 //define('__ROOT__', dirname(__FILE__));
 // var_dump($_SERVER['DOCUMENT_ROOT']);
 // var_dump(__ROOT__."/includes/entete_inc.php");

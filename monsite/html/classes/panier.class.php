@@ -1,9 +1,9 @@
 <?php
-// require_once $_SERVER['DOCUMENT_ROOT'].'/classes/Produit.class.php';
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/produit.class.php");
+
 class Panier
 {
-    protected $m_listeCommandes = array();
+    private $m_listeCommandes; // = array();
     private $m_prixTotal;
     private $m_rabais;
     private $m_prixTotalAvantTaxes;
@@ -11,6 +11,22 @@ class Panier
     private $m_prixTotalAvecTaxes;
     private $m_etatCommande;
 
+    //Constructeur
+    // public function __construct()
+    public function __construct($p_etat)
+    {
+        $this->m_listeCommandes = array();
+        $this->setPrixTotal();
+        $this->setRabais();
+        $this->setPrixTotalAvantTaxes();
+        $this->setTaxes();
+        $this->setPrixTotalAvecTaxes();
+        // $this->setEtat("En cours");
+        $this->setEtat($p_etat);
+    }
+
+
+    // getter/setter
     public function getPrixTotal()
     {
         return $this->m_prixTotal;
@@ -90,7 +106,7 @@ class Panier
     }
     public function setEtat($p_etatCommande)
     {
-        $this->m_etatCommande = $this->$p_etatCommande;
+        $this->m_etatCommande = $p_etatCommande;
     }
 
     public function getItems()
