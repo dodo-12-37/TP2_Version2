@@ -41,8 +41,9 @@ if (isset($_SESSION)) {
                         if (isset($_SESSION['cart'])) {
                             $panier = unserialize($_SESSION['cart']);
                         } else {
-                            $panier = new Panier();
-                            $panier->setEtat("En cours");
+                            $panier = new Panier("En cours");
+                            // $panier = new Panier();
+                            // $panier->setEtat("En cours");
                         }
                         
                         $newOeuvre = chercherOeuvre(explode(":", $connOeuvre)[0]);

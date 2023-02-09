@@ -30,9 +30,9 @@
 
     <script defer src="js/nav.js"></script>
     
-    <script>
+    <!-- <script>
         var DOCUMENT_ROOT = "<?= $_SERVER['DOCUMENT_ROOT'] ?>";
-    </script>
+    </script> -->
 </head>
 
 <body>
